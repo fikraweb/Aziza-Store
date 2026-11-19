@@ -1,8 +1,57 @@
 const groups = {
-  Visage: [[8, 'Soin du visage en flacon'], [20, 'Gommages visage'], [23, 'Crème de soin'], [26, 'Savon au citron'], [27, 'Crèmes et soins du visage'], [32, 'Masques visage'], [33, 'Huile de rose Rose Breeze'], [45, 'Teinte joues à l’Aker Fassi'], [40, 'Gommages visage et corps']],
-  Corps: [[2, 'Ensemble de soins'], [3, 'Soins en flacon pompe'], [12, 'Collection de soins en pot'], [15, 'Duo de soins en pot'], [16, 'Collection de flacons colorés'], [17, 'Coffret de soins'], [19, 'Collection de soins en coffret'], [24, 'Soins du corps en pot'], [25, 'Ensemble de soins en boîte'], [28, 'Collection de soins pour le corps'], [29, 'Sélection de soins en pot'], [31, 'Duo de flacons pompe'], [34, 'Collection de soins parfumés'], [44, 'Soins en flacon et en coffret']],
-  Cheveux: [[14, 'Shampoing au sidr'], [18, 'Soin capillaire en tube'], [21, 'Gamme de soins capillaires'], [30, 'Soin capillaire en flacon']],
-  'Autres soins': [[1, 'Soin en pot · étiquette verte'], [4, 'Soin en pot · étiquette bleue'], [5, 'Soin en pot · étiquette dorée'], [6, 'Soin en pot · étiquette rose'], [7, 'Soin en pot · étiquette claire'], [9, 'Soin en pot · étiquette beige'], [10, 'Soin en pot · étiquette violette'], [11, 'Soin en pot · étiquette olive'], [13, 'Soin en pot · étiquette jaune'], [22, 'Collection de soins ambrés'], [35, 'Huile de soin · étiquette olive'], [36, 'Huile de soin · étiquette jaune'], [37, 'Huile de soin · étiquette rose'], [38, 'Huile de soin · étiquette verte'], [39, 'Flacon RhumaTix'], [41, 'Huile de soin · étiquette dorée'], [42, 'Huile de soin · étiquette bleue'], [43, 'Huile de soin · étiquette beige']],
+  'الوجه': [
+    [8, 'عناية للوجه في قارورة'],
+    [20, 'مقشّرات للوجه'],
+    [23, 'كريم للعناية'],
+    [26, 'صابون بالليمون'],
+    [27, 'كريمات ومنتجات للعناية بالوجه'],
+    [32, 'أقنعة للوجه'],
+    [33, 'زيت الورد روز بريز'],
+    [45, 'مورّد الخدود بالعكر الفاسي'],
+    [40, 'مقشّرات للوجه والجسم'],
+  ],
+  'الجسم': [
+    [2, 'مجموعة للعناية'],
+    [3, 'مستحضرات عناية بعبوات ذات مضخّة'],
+    [12, 'تشكيلة مستحضرات عناية في علب'],
+    [15, 'عبوتان للعناية'],
+    [16, 'تشكيلة عبوات ملوّنة'],
+    [17, 'علبة هدايا للعناية'],
+    [19, 'تشكيلة علب للعناية'],
+    [24, 'مستحضرات عناية بالجسم في علب'],
+    [25, 'طقم عناية في علبة'],
+    [28, 'مجموعة للعناية بالجسم'],
+    [29, 'مختارات من مستحضرات العناية في علب'],
+    [31, 'عبوات عناية بمضخّة'],
+    [34, 'تشكيلة مستحضرات عناية معطّرة'],
+    [44, 'مستحضرات عناية في عبوات وعلب'],
+  ],
+  'الشعر': [
+    [14, 'شامبو السدر'],
+    [18, 'مستحضر عناية بالشعر في أنبوب'],
+    [21, 'مجموعة للعناية بالشعر'],
+    [30, 'مستحضر عناية بالشعر في قارورة'],
+  ],
+  'منتجات أخرى': [
+    [1, 'مستحضر في علبة بملصق أخضر'],
+    [4, 'مستحضر في علبة بملصق أزرق'],
+    [5, 'مستحضر في علبة بملصق ذهبي'],
+    [6, 'مستحضر في علبة بملصق وردي'],
+    [7, 'مستحضر في علبة بملصق فاتح'],
+    [9, 'مستحضر في علبة بملصق بيج'],
+    [10, 'مستحضر في علبة بملصق بنفسجي'],
+    [11, 'مستحضر في علبة بملصق زيتوني'],
+    [13, 'مستحضر في علبة بملصق أصفر'],
+    [22, 'بخور السرغينة'],
+    [35, 'زيت عناية بملصق زيتوني'],
+    [36, 'زيت عناية بملصق أصفر'],
+    [37, 'زيت عناية بملصق وردي'],
+    [38, 'زيت عناية بملصق أخضر'],
+    [39, 'قارورة روماتيكس'],
+    [41, 'زيت عناية بملصق ذهبي'],
+    [42, 'زيت عناية بملصق أزرق'],
+    [43, 'زيت عناية بملصق بيج'],
+  ],
 };
 
 const products = Object.entries(groups).flatMap(([category, entries]) =>
@@ -114,14 +163,30 @@ try {
 } catch {
   // Keep the selection available for the current page if storage is unavailable.
 }
-let category = 'Tout';
+const allCategories = 'الكل';
+const number = new Intl.NumberFormat('ar-MA-u-nu-arab');
+const plurals = new Intl.PluralRules('ar');
+const productCounts = {
+  one: 'منتج واحد',
+  two: 'منتجان',
+  few: '{count} منتجات',
+  many: '{count} منتجًا',
+  other: '{count} منتج',
+};
+let category = allCategories;
 
 function normalize(value) {
-  return value.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().trim();
+  return value
+    .normalize('NFKD')
+    .replace(/[\p{Mark}ـ]/gu, '')
+    .replace(/[ٱآأإ]/gu, 'ا')
+    .replace(/ى/gu, 'ي')
+    .toLowerCase()
+    .trim();
 }
 
 function updateButtons() {
-  count.textContent = selected.size;
+  count.textContent = number.format(selected.size);
   grid.querySelectorAll('[data-add]').forEach(button => {
     const isSelected = selected.has(Number(button.dataset.add));
     button.setAttribute('aria-pressed', isSelected);
@@ -143,25 +208,25 @@ function toggleSelection(id) {
 function renderProducts() {
   const query = normalize(search.value);
   const visible = products.filter(product =>
-    (category === 'Tout' || product.category === category)
+    (category === allCategories || product.category === category)
     && normalize(`${product.name} ${product.category}`).includes(query),
   );
   resultCount.textContent = visible.length
-    ? `${visible.length} ${visible.length === 1 ? 'référence' : 'références'}`
-    : 'Aucune référence trouvée.';
+    ? productCounts[plurals.select(visible.length)].replace('{count}', number.format(visible.length))
+    : 'لا توجد منتجات مطابقة للبحث.';
   grid.innerHTML = visible.map(product => {
     const { id, name, category } = product;
     return `
       <article class="card">
-        <button class="photo" data-detail="${id}" aria-label="Voir ${name}" aria-haspopup="dialog">
+        <button class="photo" data-detail="${id}" aria-label="عرض صورة ${name}" aria-haspopup="dialog">
           ${renderPhoto(product)}
         </button>
         <div class="card-copy">
           <p class="card-category">${category}</p>
           <h3>${name}</h3>
           <div class="card-actions">
-            <button class="details" data-detail="${id}" aria-label="Voir les détails de ${name}" aria-haspopup="dialog">Voir le soin <span class="arrow" aria-hidden="true"></span></button>
-            <button class="add" data-add="${id}" aria-label="Sélectionner ${name}"></button>
+            <button class="details" data-detail="${id}" aria-label="تفاصيل ${name}" aria-haspopup="dialog">عرض التفاصيل <span class="arrow" aria-hidden="true"></span></button>
+            <button class="add" data-add="${id}" aria-label="اختيار ${name}"></button>
           </div>
         </div>
       </article>
@@ -170,7 +235,7 @@ function renderProducts() {
   updateButtons();
 }
 
-for (const label of ['Tout', ...Object.keys(groups)]) {
+for (const label of [allCategories, ...Object.keys(groups)]) {
   const button = document.createElement('button');
   button.textContent = label;
   button.setAttribute('aria-pressed', label === category);
@@ -187,16 +252,16 @@ function renderDetail(product) {
   title.textContent = product.name;
   body.innerHTML = `
     <div class="detail-photo">${renderPhoto(product, true)}</div>
-    <button class="button" data-toggle="${product.id}">${selected.has(product.id) ? 'Retirer de ma sélection' : 'Ajouter à ma sélection'}</button>
+    <button class="button" data-toggle="${product.id}">${selected.has(product.id) ? 'إزالة من مختاراتي' : 'إضافة إلى مختاراتي'}</button>
   `;
 }
 
 function renderSelection() {
-  title.textContent = 'Ma sélection';
+  title.textContent = 'مختاراتي';
   const items = products.filter(product => selected.has(product.id));
   body.innerHTML = items.length ? `<ul class="selection-list">${items.map(({ id, name }) =>
-    `<li><span>${name}</span><button data-remove="${id}" aria-label="Retirer ${name}">Retirer</button></li>`,
-  ).join('')}</ul>` : '<p>Votre sélection est vide.</p>';
+    `<li><span>${name}</span><button data-remove="${id}" aria-label="إزالة ${name}">إزالة</button></li>`,
+  ).join('')}</ul>` : '<p>لم تختاري أي منتج بعد.</p>';
 }
 
 search.addEventListener('input', renderProducts);
@@ -220,7 +285,7 @@ body.addEventListener('click', event => {
   if (button.dataset.toggle) {
     const id = Number(button.dataset.toggle);
     toggleSelection(id);
-    button.textContent = selected.has(id) ? 'Retirer de ma sélection' : 'Ajouter à ma sélection';
+    button.textContent = selected.has(id) ? 'إزالة من مختاراتي' : 'إضافة إلى مختاراتي';
   } else if (button.dataset.remove) {
     toggleSelection(Number(button.dataset.remove));
     renderSelection();

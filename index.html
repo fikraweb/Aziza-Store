@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Découvrez le catalogue de soins du visage, du corps et des cheveux d’Aziza Store.">
-  <title>Aziza Store — Soins & beauté</title>
+  <meta name="description" content="اكتشفي مجموعة عزيزة ستور للعناية بالوجه والجسم والشعر.">
+  <title>عزيزة ستور | العناية والجمال</title>
   <link rel="icon" href="images/aziza-mark.png">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="store.js"></script>
@@ -12,35 +12,41 @@
 <body>
   <header class="header">
     <div class="wrap header-inner">
-      <a class="brand" href="#" aria-label="Aziza Store, accueil"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">Aziza<small>STORE</small></span></a>
-      <nav aria-label="Navigation principale"><a href="#catalogue">Catalogue</a><a href="#boutique">La boutique</a></nav>
-      <button class="selection" id="open-selection" aria-haspopup="dialog">Ma sélection <span id="count">0</span></button>
+      <a class="brand" href="#" aria-label="عزيزة ستور، الصفحة الرئيسية"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">عزيزة<small>ستور</small></span></a>
+      <nav aria-label="التنقّل الرئيسي"><a href="#catalogue">المنتجات</a><a href="#boutique">عن المتجر</a></nav>
+      <button class="selection" id="open-selection" aria-haspopup="dialog">مختاراتي <span id="count">٠</span></button>
     </div>
   </header>
   <main>
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">SOIN DU VISAGE, DU CORPS & DES CHEVEUX</p>
-        <h1 id="hero-title">Un rituel<br><em>à soi.</em></h1>
-        <p>Des huiles, des masques et des soins pour composer une routine qui vous ressemble.</p>
-        <a class="button" href="#catalogue">Découvrir le catalogue <span class="arrow" aria-hidden="true"></span></a>
+        <p class="eyebrow">عناية بالوجه والجسم والشعر</p>
+        <h1 id="hero-title">عناية تليق <em>بكِ</em></h1>
+        <p>زيوت وأقنعة ومنتجات عناية لتختاري منها ما يناسبكِ كل يوم.</p>
+        <a class="button" href="#catalogue">تصفّحي المنتجات <span class="arrow" aria-hidden="true"></span></a>
       </div>
-      <img class="hero-image" src="images/hero.webp" alt="Shampoing au sidr, huile de rose Rose Breeze et teinte joues à l’Aker Fassi" width="1536" height="1024" fetchpriority="high">
+      <img class="hero-image" src="images/hero.webp" alt="شامبو السدر وزيت الورد ومورّد الخدود بالعكر الفاسي" width="1536" height="1024" fetchpriority="high">
     </section>
 
     <section class="catalogue wrap" id="catalogue" aria-labelledby="catalogue-title">
       <div class="section-heading">
-        <h2 id="catalogue-title">Les soins Aziza</h2>
-        <label class="search">Rechercher<input type="search" id="search" placeholder="Ex. shampoing, huile…"></label>
+        <h2 id="catalogue-title">منتجات عزيزة</h2>
+        <label class="search" for="search">البحث في المنتجات<input type="search" id="search" placeholder="مثلاً شامبو السدر، زيت الورد…"></label>
       </div>
-      <div class="filters" id="filters" role="group" aria-label="Catégories du catalogue"></div>
+      <div class="filters" id="filters" role="group" aria-label="أقسام المنتجات"></div>
       <p id="result-count" class="result-count" aria-live="polite"></p>
       <div id="products" class="grid"></div>
     </section>
   </main>
-  <footer id="boutique"><div class="wrap footer-inner"><a class="brand" href="#"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">Aziza<small>STORE</small></span></a><p>Boutique de soins pour le visage, le corps et les cheveux.</p><a href="#catalogue">Voir le catalogue</a></div></footer>
+  <footer id="boutique">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">عزيزة<small>ستور</small></span></a>
+      <p>متجر للعناية بالوجه والجسم والشعر.</p>
+      <a href="#catalogue">تصفّحي المنتجات</a>
+    </div>
+  </footer>
   <dialog id="dialog" aria-labelledby="dialog-title">
-    <div class="dialog-header"><h2 id="dialog-title"></h2><form method="dialog"><button class="close" aria-label="Fermer">×</button></form></div>
+    <div class="dialog-header"><h2 id="dialog-title"></h2><form method="dialog"><button class="close" aria-label="إغلاق">×</button></form></div>
     <div id="dialog-body"></div>
   </dialog>
 </body>
