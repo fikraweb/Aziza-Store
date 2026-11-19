@@ -1,62 +1,6 @@
-const groups = {
-  'الوجه': [
-    [8, 'عناية للوجه في قارورة', 45],
-    [20, 'مقشّرات للوجه', 45],
-    [23, 'كريم للعناية', 40],
-    [26, 'صابون بالليمون', 15],
-    [27, 'كريمات ومنتجات للعناية بالوجه', 50],
-    [32, 'أقنعة للوجه', 40],
-    [33, 'زيت الورد روز بريز', 55],
-    [45, 'مورّد الخدود بالعكر الفاسي', 30],
-    [40, 'مقشّرات للوجه والجسم', 50],
-  ],
-  'الجسم': [
-    [2, 'مجموعة للعناية', 75],
-    [3, 'مستحضرات عناية بعبوات ذات مضخّة', 65],
-    [12, 'تشكيلة مستحضرات عناية في علب', 70],
-    [15, 'عبوتان للعناية', 55],
-    [16, 'تشكيلة عبوات ملوّنة', 65],
-    [17, 'علبة هدايا للعناية', 80],
-    [19, 'تشكيلة علب للعناية', 80],
-    [24, 'مستحضرات عناية بالجسم في علب', 40],
-    [25, 'طقم عناية في علبة', 70],
-    [28, 'مجموعة للعناية بالجسم', 75],
-    [29, 'مختارات من مستحضرات العناية في علب', 65],
-    [31, 'عبوات عناية بمضخّة', 60],
-    [34, 'تشكيلة مستحضرات عناية معطّرة', 65],
-    [44, 'مستحضرات عناية في عبوات وعلب', 75],
-  ],
-  'الشعر': [
-    [14, 'شامبو السدر', 45],
-    [18, 'مستحضر عناية بالشعر في أنبوب', 30],
-    [21, 'مجموعة للعناية بالشعر', 75],
-    [30, 'مستحضر عناية بالشعر في قارورة', 40],
-  ],
-  'منتجات أخرى': [
-    [1, 'مستحضر في علبة بملصق أخضر', 35],
-    [4, 'مستحضر في علبة بملصق أزرق', 35],
-    [5, 'مستحضر في علبة بملصق ذهبي', 40],
-    [6, 'مستحضر في علبة بملصق وردي', 35],
-    [7, 'مستحضر في علبة بملصق فاتح', 30],
-    [9, 'مستحضر في علبة بملصق بيج', 30],
-    [10, 'مستحضر في علبة بملصق بنفسجي', 35],
-    [11, 'مستحضر في علبة بملصق زيتوني', 40],
-    [13, 'مستحضر في علبة بملصق أصفر', 35],
-    [22, 'بخور السرغينة', 25],
-    [35, 'زيت عناية بملصق زيتوني', 35],
-    [36, 'زيت عناية بملصق أصفر', 35],
-    [37, 'زيت عناية بملصق وردي', 40],
-    [38, 'زيت عناية بملصق أخضر', 35],
-    [39, 'قارورة روماتيكس', 45],
-    [41, 'زيت عناية بملصق ذهبي', 40],
-    [42, 'زيت عناية بملصق أزرق', 35],
-    [43, 'زيت عناية بملصق بيج', 35],
-  ],
-};
+import { groups, products as originalProducts } from './images/catalogue.js';
 
-const products = Object.entries(groups).flatMap(([category, entries]) =>
-  entries.map(([id, name, price]) => ({ id, name, price, category, image: `images/${String(id).padStart(2, '0')}.jpg` })),
-);
+const products = originalProducts.map(product => ({ ...product }));
 const featured = [33, 14, 45, 40, 31, 32, 28, 39];
 products.sort((a, b) => {
   const rank = ({ id }) => featured.includes(id) ? featured.indexOf(id) : featured.length + id;
@@ -141,7 +85,7 @@ function renderPhoto(product, detail = false) {
   const [x, y, width, height] = studio || originalCrop;
   const percent = (part, whole) => `${(part / whole) * 100}%`;
   return `<span class="product-frame" style="--ratio:${width / height}">
-    <img src="${studio ? 'images/hero.webp' : image}" alt="${detail ? name : ''}" ${detail ? '' : 'loading="lazy"'} decoding="async"
+    <img src="${studio ? 'images/hero.webp' : image}" alt="${detail ? safe(name) : ''}" ${detail ? '' : 'loading="lazy"'} decoding="async"
       style="width:${percent(studio ? 1536 : sourceWidth, width)}; height:${percent(studio ? 1024 : sourceHeight, height)}; left:-${percent(x, width)}; top:-${percent(y, height)}">
   </span>`;
 }
@@ -155,10 +99,11 @@ const dialog = document.querySelector('#dialog');
 const title = document.querySelector('#dialog-title');
 const body = document.querySelector('#dialog-body');
 const openCart = document.querySelector('#open-cart');
-const businessWhatsApp = ''; // Business number in international format, digits only.
+let businessWhatsApp = '';
+let storeName = 'عزيزة ستور';
+let ordering = true;
 const demoWhatsApp = '12025550147'; // Reserved fictional number.
-const storeWhatsApp = businessWhatsApp || demoWhatsApp;
-document.querySelector('#faq-demo').hidden = Boolean(businessWhatsApp);
+
 const storageKey = 'aziza-cart';
 const maxQuantity = 99;
 const cart = new Map();
@@ -174,6 +119,9 @@ try {
 }
 const allCategories = 'الكل';
 const number = new Intl.NumberFormat('ar-MA-u-nu-latn');
+const safe = value => String(value).replace(/[&<>"']/g, char => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]
+));
 const formatPrice = price => `${number.format(price)} درهم`;
 const plurals = new Intl.PluralRules('ar');
 const productCounts = {
@@ -218,7 +166,7 @@ function changeQuantity(id, delta) {
 function renderProducts() {
   const query = normalize(search.value);
   const visible = products.filter(product =>
-    (category === allCategories || product.category === category)
+    (!product.hidden && (category === allCategories || product.category === category))
     && normalize(`${product.name} ${product.category}`).includes(query),
   );
   resultCount.textContent = visible.length
@@ -228,16 +176,16 @@ function renderProducts() {
     const { id, name, category, price } = product;
     return `
       <article class="card">
-        <button class="photo" data-detail="${id}" aria-label="عرض صورة ${name}" aria-haspopup="dialog">
+        <button class="photo" data-detail="${id}" aria-label="عرض صورة ${safe(name)}" aria-haspopup="dialog">
           ${renderPhoto(product)}
           <span class="card-category">${category}</span>
         </button>
         <div class="card-copy">
-          <h3>${name}</h3>
+          <h3>${safe(name)}</h3>
           <p class="price">${formatPrice(price)}</p>
           <div class="card-actions">
-            <button class="details" data-detail="${id}" aria-label="تفاصيل ${name}" aria-haspopup="dialog">عرض التفاصيل <span class="arrow" aria-hidden="true"></span></button>
-            <button class="add" data-add="${id}" aria-label="إضافة ${name} إلى السلة">+</button>
+            <button class="details" data-detail="${id}" aria-label="تفاصيل ${safe(name)}" aria-haspopup="dialog">عرض التفاصيل <span class="arrow" aria-hidden="true"></span></button>
+            <button class="add" data-add="${id}" aria-label="إضافة ${safe(name)} إلى السلة">+</button>
           </div>
         </div>
       </article>
@@ -294,7 +242,7 @@ function renderDetail(product) {
       <div class="detail-photo">${renderPhoto(product, true)}</div>
       <div class="detail-copy">
         <p class="detail-category">${product.category}</p>
-        <h2 id="product-dialog-title">${product.name}</h2>
+        <h2 id="product-dialog-title">${safe(product.name)}</h2>
         <p class="price">${formatPrice(product.price)}</p>
         <button class="button" data-add="${product.id}" ${cart.get(product.id) === maxQuantity ? 'disabled' : ''}>إضافة إلى السلة</button>
         <p class="detail-status" aria-live="polite"></p>
@@ -319,17 +267,19 @@ function renderCart() {
       ${items.map(({ id, name, price }) => {
         const quantity = cart.get(id);
         return `<li>
-          <div><strong>${name}</strong><div class="price">${formatPrice(price * quantity)}</div></div>
-          <div class="cart-quantity" role="group" aria-label="كمية ${name}">
-            <button data-cart-id="${id}" data-delta="-1" aria-label="${quantity === 1 ? 'إزالة' : 'إنقاص كمية'} ${name}">−</button>
+          <div><strong>${safe(name)}</strong><div class="price">${formatPrice(price * quantity)}</div></div>
+          <div class="cart-quantity" role="group" aria-label="كمية ${safe(name)}">
+            <button data-cart-id="${id}" data-delta="-1" aria-label="${quantity === 1 ? 'إزالة' : 'إنقاص كمية'} ${safe(name)}">−</button>
             <span aria-live="polite">${number.format(quantity)}</span>
-            <button data-cart-id="${id}" data-delta="1" aria-label="زيادة كمية ${name}" ${quantity === maxQuantity ? 'disabled' : ''}>+</button>
+            <button data-cart-id="${id}" data-delta="1" aria-label="زيادة كمية ${safe(name)}" ${quantity === maxQuantity ? 'disabled' : ''}>+</button>
           </div>
         </li>`;
       }).join('')}
     </ul>
     <p class="cart-total"><strong>مجموع المنتجات</strong><strong class="price">${formatPrice(total)}</strong></p>
-    <button class="button checkout-next" data-checkout>متابعة الطلب</button>
+    ${ordering
+      ? '<button class="button checkout-next" data-checkout>متابعة الطلب</button>'
+      : '<p>الطلبات موقوفة مؤقتًا.</p>'}
   `;
 }
 
@@ -367,10 +317,10 @@ function customerPhone(value) {
     .replace(/[\s().-]/gu, '');
 }
 
-body.addEventListener('submit', event => {
+body.addEventListener('submit', async event => {
   if (event.target.id !== 'checkout-form') return;
   event.preventDefault();
-  if (!cart.size) return;
+  if (!cart.size || !ordering) return;
 
   const form = event.target;
   const fields = new FormData(form);
@@ -384,21 +334,54 @@ body.addEventListener('submit', event => {
     return;
   }
 
-  const lines = products.filter(({ id }) => cart.has(id)).map(({ id, name, price }) =>
-    `• ${cart.get(id)} × ${name} — ${formatPrice(price * cart.get(id))}`,
-  );
+  let items = products.filter(({ id }) => cart.has(id)).map(({ id, name, price }) => ({ id, name, price, quantity: cart.get(id) }));
+  let total = cartTotal();
+  let whatsapp = demoWhatsApp;
+  let orderId = '';
+  if (businessWhatsApp) {
+    form.dataset.orderId ||= crypto.randomUUID();
+    event.submitter.disabled = true;
+    try {
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: form.dataset.orderId, items: items.map(({ id, quantity }) => ({ id, quantity })) }),
+      });
+      if (!response.ok) throw new Error('order unavailable');
+      ({ id: orderId, items, total, whatsapp } = await response.json());
+    } catch {
+      status.textContent = 'تعذّر تجهيز الطلب. حدّثي الصفحة وحاولي من جديد.';
+      return;
+    } finally {
+      event.submitter.disabled = false;
+    }
+  }
+  const lines = items.map(({ name, price, quantity }) => `• ${quantity} × ${name} — ${formatPrice(price * quantity)}`);
   const message = [
-    'السلام عليكم، بغيت نأكد هاد الطلب من عزيزة ستور.',
+    `السلام عليكم، بغيت نأكد هاد الطلب من ${storeName}.`,
     '',
+    ...(orderId ? [`رقم الطلب: ${orderId}`] : []),
     ...lines,
-    `مجموع المنتجات: ${formatPrice(cartTotal())}`,
+    `مجموع المنتجات: ${formatPrice(total)}`,
     '',
     `الاسم: ${name}`,
     `الهاتف: ${phone}`,
     `المدينة: ${city}`,
     `عنوان التوصيل: ${address}`,
   ].join('\n');
-  window.open(`https://wa.me/${storeWhatsApp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+  const link = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+  if (!orderId) {
+    window.open(link, '_blank', 'noopener,noreferrer');
+    return;
+  }
+  const whatsappLink = document.createElement('a');
+  whatsappLink.className = 'button';
+  whatsappLink.href = link;
+  whatsappLink.target = '_blank';
+  whatsappLink.rel = 'noopener noreferrer';
+  whatsappLink.textContent = 'افتحي واتساب وأرسلي الطلب';
+  event.submitter.replaceWith(whatsappLink);
+  whatsappLink.focus();
 });
 
 search.addEventListener('input', renderProducts);
@@ -444,3 +427,33 @@ body.addEventListener('click', event => {
 });
 
 renderProducts();
+
+async function loadStore() {
+  try {
+    const response = await fetch('/api/store');
+    if (!response.ok) return;
+    const { settings, products: overrides } = await response.json();
+    if (!settings || !overrides) return;
+    for (const product of products) {
+      Object.assign(product, overrides[product.id]);
+      if (product.hidden) cart.delete(product.id);
+    }
+    businessWhatsApp = settings.whatsapp;
+    storeName = settings.name;
+    document.querySelector('[data-store-name]').textContent = storeName;
+    ordering = settings.ordering;
+    document.querySelector('#faq-demo').hidden = Boolean(businessWhatsApp);
+    document.title = `${settings.name} | العناية والجمال`;
+    document.querySelector('.hero-copy h1').firstChild.textContent = `${settings.headline} `;
+    document.querySelector('.hero-copy h1 em').textContent = settings.emphasis;
+    document.querySelector('.hero-copy > p:not(.eyebrow)').textContent = settings.description;
+    document.querySelectorAll('.wordmark').forEach(mark => {
+      if (settings.name !== 'عزيزة ستور') mark.textContent = settings.name;
+    });
+    renderProducts();
+    fetch('/api/visit', { method: 'POST', keepalive: true }).catch(() => {});
+  } catch {
+    // Keep the bundled catalogue usable when the service is unavailable.
+  }
+}
+loadStore();
