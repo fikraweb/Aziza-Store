@@ -1,8 +1,8 @@
 const groups = {
-  Visage: [[8, 'Soin du visage en flacon'], [20, 'Gommages visage'], [23, 'Crème de soin'], [26, 'Savon au citron'], [27, 'Crèmes et soins du visage'], [32, 'Masques visage'], [33, 'Sérum visage'], [39, 'Huile de soin à l’avocat'], [40, 'Gommages visage et corps']],
-  Corps: [[2, 'Ensemble de soins'], [3, 'Soins en flacon pompe'], [12, 'Collection de soins en pot'], [15, 'Duo de soins en pot'], [16, 'Collection de flacons colorés'], [17, 'Coffret de soins'], [19, 'Collection de soins en coffret'], [24, 'Soins du corps en pot'], [25, 'Ensemble de soins en boîte'], [28, 'Collection de soins pour le corps'], [29, 'Sélection de soins en pot'], [31, 'Duo de flacons pompe'], [34, 'Collection de soins parfumés'], [44, 'Soins en flacon et en coffret'], [45, 'Huiles parfumées']],
+  Visage: [[8, 'Soin du visage en flacon'], [20, 'Gommages visage'], [23, 'Crème de soin'], [26, 'Savon au citron'], [27, 'Crèmes et soins du visage'], [32, 'Masques visage'], [33, 'Huile de rose Rose Breeze'], [45, 'Teinte joues à l’Aker Fassi'], [40, 'Gommages visage et corps']],
+  Corps: [[2, 'Ensemble de soins'], [3, 'Soins en flacon pompe'], [12, 'Collection de soins en pot'], [15, 'Duo de soins en pot'], [16, 'Collection de flacons colorés'], [17, 'Coffret de soins'], [19, 'Collection de soins en coffret'], [24, 'Soins du corps en pot'], [25, 'Ensemble de soins en boîte'], [28, 'Collection de soins pour le corps'], [29, 'Sélection de soins en pot'], [31, 'Duo de flacons pompe'], [34, 'Collection de soins parfumés'], [44, 'Soins en flacon et en coffret']],
   Cheveux: [[14, 'Shampoing au sidr'], [18, 'Soin capillaire en tube'], [21, 'Gamme de soins capillaires'], [30, 'Soin capillaire en flacon']],
-  'Autres soins': [[1, 'Soin en pot · étiquette verte'], [4, 'Soin en pot · étiquette bleue'], [5, 'Soin en pot · étiquette dorée'], [6, 'Soin en pot · étiquette rose'], [7, 'Soin en pot · étiquette claire'], [9, 'Soin en pot · étiquette beige'], [10, 'Soin en pot · étiquette violette'], [11, 'Soin en pot · étiquette olive'], [13, 'Soin en pot · étiquette jaune'], [22, 'Collection de soins ambrés'], [35, 'Huile de soin · étiquette olive'], [36, 'Huile de soin · étiquette jaune'], [37, 'Huile de soin · étiquette rose'], [38, 'Huile de soin · étiquette verte'], [41, 'Huile de soin · étiquette dorée'], [42, 'Huile de soin · étiquette bleue'], [43, 'Huile de soin · étiquette beige']],
+  'Autres soins': [[1, 'Soin en pot · étiquette verte'], [4, 'Soin en pot · étiquette bleue'], [5, 'Soin en pot · étiquette dorée'], [6, 'Soin en pot · étiquette rose'], [7, 'Soin en pot · étiquette claire'], [9, 'Soin en pot · étiquette beige'], [10, 'Soin en pot · étiquette violette'], [11, 'Soin en pot · étiquette olive'], [13, 'Soin en pot · étiquette jaune'], [22, 'Collection de soins ambrés'], [35, 'Huile de soin · étiquette olive'], [36, 'Huile de soin · étiquette jaune'], [37, 'Huile de soin · étiquette rose'], [38, 'Huile de soin · étiquette verte'], [39, 'Flacon RhumaTix'], [41, 'Huile de soin · étiquette dorée'], [42, 'Huile de soin · étiquette bleue'], [43, 'Huile de soin · étiquette beige']],
 };
 
 const products = Object.entries(groups).flatMap(([category, entries]) =>
@@ -13,6 +13,89 @@ products.sort((a, b) => {
   const rank = ({ id }) => featured.includes(id) ? featured.indexOf(id) : featured.length + id;
   return rank(a) - rank(b);
 });
+
+// Width, height, and vertical bounds of the catalogue photo inside each source.
+const photoBounds = [
+  [720, 1612, 397, 1235],
+  [720, 1291, 340, 1291],
+  [720, 1612, 184, 1515],
+  [720, 1612, 396, 1238],
+  [720, 1612, 292, 1303],
+  [720, 1612, 303, 1292],
+  [720, 1612, 299, 1272],
+  [720, 1612, 327, 1285],
+  [720, 1612, 247, 1326],
+  [720, 1612, 289, 1319],
+  [720, 1612, 289, 1300],
+  [720, 1612, 184, 1425],
+  [720, 1612, 265, 1273],
+  [714, 1599, 350, 1249],
+  [720, 1612, 323, 1289],
+  [714, 1599, 335, 1264],
+  [720, 1612, 315, 1281],
+  [720, 1612, 447, 1165],
+  [720, 1521, 0, 1521],
+  [720, 1467, 0, 1467],
+  [720, 1612, 0, 1612],
+  [714, 1599, 300, 1303],
+  [720, 1612, 327, 1285],
+  [720, 1407, 316, 1274],
+  [720, 1612, 323, 1289],
+  [720, 1443, 0, 1443],
+  [720, 1612, 0, 1612],
+  [714, 1599, 361, 1238],
+  [714, 1599, 320, 1279],
+  [720, 1612, 521, 1479],
+  [720, 1612, 347, 1265],
+  [720, 1612, 0, 1612],
+  [714, 1599, 329, 1270],
+  [720, 1612, 478, 1134],
+  [720, 1612, 327, 1285],
+  [720, 1612, 327, 1285],
+  [720, 1612, 327, 1285],
+  [720, 1612, 327, 1285],
+  [720, 1612, 327, 1285],
+  [720, 1612, 184, 1449],
+  [720, 1612, 327, 1285],
+  [720, 1612, 327, 1285],
+  [720, 1612, 327, 1285],
+  [720, 1612, 323, 1289],
+  [720, 1612, 327, 1285],
+];
+
+// Tighter product crops for the featured photos and taller catalogue artwork.
+const cardCrops = {
+  3: [82, 370, 570, 880],
+  19: [0, 50, 720, 600],
+  20: [0, 198, 720, 625],
+  21: [0, 310, 720, 835],
+  22: [0, 715, 714, 508],
+  27: [0, 390, 720, 655],
+  28: [0, 540, 714, 650],
+  31: [0, 515, 720, 710],
+  32: [0, 244, 720, 647],
+  40: [0, 474, 720, 818],
+};
+
+// Use the studio composition on the three featured cards. Details use the originals.
+const studioCrops = {
+  14: [311, 48, 365, 870],
+  33: [669, 172, 230, 741],
+  45: [891, 372, 425, 550],
+};
+
+function renderPhoto(product, detail = false) {
+  const { id, name, image } = product;
+  const [sourceWidth, sourceHeight, top, bottom] = photoBounds[id - 1];
+  const studio = !detail && studioCrops[id];
+  const originalCrop = (!detail && cardCrops[id]) || [0, top, sourceWidth, bottom - top];
+  const [x, y, width, height] = studio || originalCrop;
+  const percent = (part, whole) => `${(part / whole) * 100}%`;
+  return `<span class="product-frame" style="--ratio:${width / height}">
+    <img src="${studio ? 'images/hero.webp' : image}" alt="${detail ? name : ''}" ${detail ? '' : 'loading="lazy"'} decoding="async"
+      style="width:${percent(studio ? 1536 : sourceWidth, width)}; height:${percent(studio ? 1024 : sourceHeight, height)}; left:-${percent(x, width)}; top:-${percent(y, height)}">
+  </span>`;
+}
 
 const filters = document.querySelector('#filters');
 const grid = document.querySelector('#products');
@@ -66,21 +149,24 @@ function renderProducts() {
   resultCount.textContent = visible.length
     ? `${visible.length} ${visible.length === 1 ? 'référence' : 'références'}`
     : 'Aucune référence trouvée.';
-  grid.innerHTML = visible.map(({ id, name, category, image }) => `
-    <article class="card">
-      <button class="photo" data-detail="${id}" aria-label="Voir ${name}" aria-haspopup="dialog">
-        <img src="${image}" alt="" loading="lazy" decoding="async">
-      </button>
-      <div class="card-copy">
-        <p class="card-category">${category}</p>
-        <h3>${name}</h3>
-        <div class="card-actions">
-          <button class="details" data-detail="${id}" aria-label="Voir les détails de ${name}" aria-haspopup="dialog">Voir le soin <span class="arrow" aria-hidden="true"></span></button>
-          <button class="add" data-add="${id}" aria-label="Sélectionner ${name}"></button>
+  grid.innerHTML = visible.map(product => {
+    const { id, name, category } = product;
+    return `
+      <article class="card">
+        <button class="photo" data-detail="${id}" aria-label="Voir ${name}" aria-haspopup="dialog">
+          ${renderPhoto(product)}
+        </button>
+        <div class="card-copy">
+          <p class="card-category">${category}</p>
+          <h3>${name}</h3>
+          <div class="card-actions">
+            <button class="details" data-detail="${id}" aria-label="Voir les détails de ${name}" aria-haspopup="dialog">Voir le soin <span class="arrow" aria-hidden="true"></span></button>
+            <button class="add" data-add="${id}" aria-label="Sélectionner ${name}"></button>
+          </div>
         </div>
-      </div>
-    </article>
-  `).join('');
+      </article>
+    `;
+  }).join('');
   updateButtons();
 }
 
@@ -100,7 +186,7 @@ for (const label of ['Tout', ...Object.keys(groups)]) {
 function renderDetail(product) {
   title.textContent = product.name;
   body.innerHTML = `
-    <img class="detail-photo" src="${product.image}" alt="${product.name}">
+    <div class="detail-photo">${renderPhoto(product, true)}</div>
     <button class="button" data-toggle="${product.id}">${selected.has(product.id) ? 'Retirer de ma sélection' : 'Ajouter à ma sélection'}</button>
   `;
 }
