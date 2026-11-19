@@ -142,7 +142,7 @@ h2 { font-size: clamp(42px, 4.5vw, 68px); line-height: 1.15; }
 .details:hover { text-decoration: underline; text-underline-offset: 3px; }
 .add { width: 37px; height: 37px; flex: none; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--forest); font: 400 22px/1 system-ui, sans-serif; }
 .add:hover { border-color: var(--forest); }
-.add[aria-pressed=true] { background: var(--forest); color: white; }
+button:disabled { opacity: .45; cursor: default; }
 footer { background: var(--sand); border-top: 1px solid var(--line); }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 130px; font-size: 14px; }
 dialog { color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 12px; width: min(490px, calc(100% - 32px)); max-height: 88dvh; padding: 22px; }
@@ -151,9 +151,14 @@ dialog::backdrop { background: #18251ca6; }
 dialog h2 { font-size: 33px; }
 .close { padding: 0; width: 36px; height: 36px; font: 400 23px/1 system-ui, sans-serif; }
 .detail-photo { display: grid; place-items: center; container-type: size; height: min(52dvh, 480px); background: var(--sand); margin-bottom: 14px; border-radius: 6px; }
-.selection-list { padding: 0; list-style: none; }
-.selection-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-.selection-list button { border: 0; background: none; text-decoration: underline; color: var(--forest); }
+.price { margin: 0; color: var(--forest); font-weight: 750; white-space: nowrap; }
+.detail-actions, .cart-total { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cart-list { margin: 0; padding: 0; list-style: none; }
+.cart-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.cart-quantity { display: flex; flex: none; align-items: center; gap: 8px; }
+.cart-quantity button { width: 33px; height: 33px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--forest); font: 400 18px/1 system-ui, sans-serif; }
+.cart-quantity span { min-width: 2ch; text-align: center; }
+.cart-total { margin: 16px 0 0; }
 :focus-visible { outline: 2px solid #687c60; outline-offset: 3px; }
 @media (max-width: 1000px) {
   .wrap { width: calc(100% - 56px); }

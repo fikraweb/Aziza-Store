@@ -1,61 +1,61 @@
 const groups = {
   'الوجه': [
-    [8, 'عناية للوجه في قارورة'],
-    [20, 'مقشّرات للوجه'],
-    [23, 'كريم للعناية'],
-    [26, 'صابون بالليمون'],
-    [27, 'كريمات ومنتجات للعناية بالوجه'],
-    [32, 'أقنعة للوجه'],
-    [33, 'زيت الورد روز بريز'],
-    [45, 'مورّد الخدود بالعكر الفاسي'],
-    [40, 'مقشّرات للوجه والجسم'],
+    [8, 'عناية للوجه في قارورة', 45],
+    [20, 'مقشّرات للوجه', 45],
+    [23, 'كريم للعناية', 40],
+    [26, 'صابون بالليمون', 15],
+    [27, 'كريمات ومنتجات للعناية بالوجه', 50],
+    [32, 'أقنعة للوجه', 40],
+    [33, 'زيت الورد روز بريز', 55],
+    [45, 'مورّد الخدود بالعكر الفاسي', 30],
+    [40, 'مقشّرات للوجه والجسم', 50],
   ],
   'الجسم': [
-    [2, 'مجموعة للعناية'],
-    [3, 'مستحضرات عناية بعبوات ذات مضخّة'],
-    [12, 'تشكيلة مستحضرات عناية في علب'],
-    [15, 'عبوتان للعناية'],
-    [16, 'تشكيلة عبوات ملوّنة'],
-    [17, 'علبة هدايا للعناية'],
-    [19, 'تشكيلة علب للعناية'],
-    [24, 'مستحضرات عناية بالجسم في علب'],
-    [25, 'طقم عناية في علبة'],
-    [28, 'مجموعة للعناية بالجسم'],
-    [29, 'مختارات من مستحضرات العناية في علب'],
-    [31, 'عبوات عناية بمضخّة'],
-    [34, 'تشكيلة مستحضرات عناية معطّرة'],
-    [44, 'مستحضرات عناية في عبوات وعلب'],
+    [2, 'مجموعة للعناية', 75],
+    [3, 'مستحضرات عناية بعبوات ذات مضخّة', 65],
+    [12, 'تشكيلة مستحضرات عناية في علب', 70],
+    [15, 'عبوتان للعناية', 55],
+    [16, 'تشكيلة عبوات ملوّنة', 65],
+    [17, 'علبة هدايا للعناية', 80],
+    [19, 'تشكيلة علب للعناية', 80],
+    [24, 'مستحضرات عناية بالجسم في علب', 40],
+    [25, 'طقم عناية في علبة', 70],
+    [28, 'مجموعة للعناية بالجسم', 75],
+    [29, 'مختارات من مستحضرات العناية في علب', 65],
+    [31, 'عبوات عناية بمضخّة', 60],
+    [34, 'تشكيلة مستحضرات عناية معطّرة', 65],
+    [44, 'مستحضرات عناية في عبوات وعلب', 75],
   ],
   'الشعر': [
-    [14, 'شامبو السدر'],
-    [18, 'مستحضر عناية بالشعر في أنبوب'],
-    [21, 'مجموعة للعناية بالشعر'],
-    [30, 'مستحضر عناية بالشعر في قارورة'],
+    [14, 'شامبو السدر', 45],
+    [18, 'مستحضر عناية بالشعر في أنبوب', 30],
+    [21, 'مجموعة للعناية بالشعر', 75],
+    [30, 'مستحضر عناية بالشعر في قارورة', 40],
   ],
   'منتجات أخرى': [
-    [1, 'مستحضر في علبة بملصق أخضر'],
-    [4, 'مستحضر في علبة بملصق أزرق'],
-    [5, 'مستحضر في علبة بملصق ذهبي'],
-    [6, 'مستحضر في علبة بملصق وردي'],
-    [7, 'مستحضر في علبة بملصق فاتح'],
-    [9, 'مستحضر في علبة بملصق بيج'],
-    [10, 'مستحضر في علبة بملصق بنفسجي'],
-    [11, 'مستحضر في علبة بملصق زيتوني'],
-    [13, 'مستحضر في علبة بملصق أصفر'],
-    [22, 'بخور السرغينة'],
-    [35, 'زيت عناية بملصق زيتوني'],
-    [36, 'زيت عناية بملصق أصفر'],
-    [37, 'زيت عناية بملصق وردي'],
-    [38, 'زيت عناية بملصق أخضر'],
-    [39, 'قارورة روماتيكس'],
-    [41, 'زيت عناية بملصق ذهبي'],
-    [42, 'زيت عناية بملصق أزرق'],
-    [43, 'زيت عناية بملصق بيج'],
+    [1, 'مستحضر في علبة بملصق أخضر', 35],
+    [4, 'مستحضر في علبة بملصق أزرق', 35],
+    [5, 'مستحضر في علبة بملصق ذهبي', 40],
+    [6, 'مستحضر في علبة بملصق وردي', 35],
+    [7, 'مستحضر في علبة بملصق فاتح', 30],
+    [9, 'مستحضر في علبة بملصق بيج', 30],
+    [10, 'مستحضر في علبة بملصق بنفسجي', 35],
+    [11, 'مستحضر في علبة بملصق زيتوني', 40],
+    [13, 'مستحضر في علبة بملصق أصفر', 35],
+    [22, 'بخور السرغينة', 25],
+    [35, 'زيت عناية بملصق زيتوني', 35],
+    [36, 'زيت عناية بملصق أصفر', 35],
+    [37, 'زيت عناية بملصق وردي', 40],
+    [38, 'زيت عناية بملصق أخضر', 35],
+    [39, 'قارورة روماتيكس', 45],
+    [41, 'زيت عناية بملصق ذهبي', 40],
+    [42, 'زيت عناية بملصق أزرق', 35],
+    [43, 'زيت عناية بملصق بيج', 35],
   ],
 };
 
 const products = Object.entries(groups).flatMap(([category, entries]) =>
-  entries.map(([id, name]) => ({ id, name, category, image: `images/${String(id).padStart(2, '0')}.jpg` })),
+  entries.map(([id, name, price]) => ({ id, name, price, category, image: `images/${String(id).padStart(2, '0')}.jpg` })),
 );
 const featured = [33, 14, 45, 40, 31, 32, 28, 39];
 products.sort((a, b) => {
@@ -154,17 +154,23 @@ const resultCount = document.querySelector('#result-count');
 const dialog = document.querySelector('#dialog');
 const title = document.querySelector('#dialog-title');
 const body = document.querySelector('#dialog-body');
-const openSelection = document.querySelector('#open-selection');
-const storageKey = 'aziza-selection';
-let selected = new Set();
+const openCart = document.querySelector('#open-cart');
+const storageKey = 'aziza-cart';
+const maxQuantity = 99;
+const cart = new Map();
 try {
   const stored = JSON.parse(localStorage.getItem(storageKey));
-  if (Array.isArray(stored)) selected = new Set(stored.filter(id => products.some(product => product.id === id)));
+  const previousSelection = stored === null ? JSON.parse(localStorage.getItem('aziza-selection')) : null;
+  for (const { id } of products) {
+    const quantity = stored?.[id] ?? Number(Array.isArray(previousSelection) && previousSelection.includes(id));
+    if (Number.isInteger(quantity) && quantity > 0) cart.set(id, Math.min(quantity, maxQuantity));
+  }
 } catch {
-  // Keep the selection available for the current page if storage is unavailable.
+  // The cart remains available for the current page if storage is unavailable.
 }
 const allCategories = 'الكل';
-const number = new Intl.NumberFormat('ar-MA-u-nu-arab');
+const number = new Intl.NumberFormat('ar-MA-u-nu-latn');
+const formatPrice = price => `${number.format(price)} درهم`;
 const plurals = new Intl.PluralRules('ar');
 const productCounts = {
   one: 'منتج واحد',
@@ -185,24 +191,24 @@ function normalize(value) {
     .trim();
 }
 
-function updateButtons() {
-  count.textContent = number.format(selected.size);
-  grid.querySelectorAll('[data-add]').forEach(button => {
-    const isSelected = selected.has(Number(button.dataset.add));
-    button.setAttribute('aria-pressed', isSelected);
-    button.textContent = isSelected ? '✓' : '+';
-  });
+function updateCartCount() {
+  const quantity = [...cart.values()].reduce((total, units) => total + units, 0);
+  count.textContent = number.format(quantity);
+  for (const button of grid.querySelectorAll('[data-add]')) {
+    button.disabled = cart.get(Number(button.dataset.add)) === maxQuantity;
+  }
 }
 
-function toggleSelection(id) {
-  if (selected.has(id)) selected.delete(id);
-  else selected.add(id);
+function changeQuantity(id, delta) {
+  const quantity = Math.min((cart.get(id) ?? 0) + delta, maxQuantity);
+  if (quantity > 0) cart.set(id, quantity);
+  else cart.delete(id);
   try {
-    localStorage.setItem(storageKey, JSON.stringify([...selected]));
+    localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(cart)));
   } catch {
-    // The current page still retains the selection.
+    // The current page still retains the cart.
   }
-  updateButtons();
+  updateCartCount();
 }
 
 function renderProducts() {
@@ -215,7 +221,7 @@ function renderProducts() {
     ? productCounts[plurals.select(visible.length)].replace('{count}', number.format(visible.length))
     : 'لا توجد منتجات مطابقة للبحث.';
   grid.innerHTML = visible.map(product => {
-    const { id, name, category } = product;
+    const { id, name, category, price } = product;
     return `
       <article class="card">
         <button class="photo" data-detail="${id}" aria-label="عرض صورة ${name}" aria-haspopup="dialog">
@@ -224,15 +230,16 @@ function renderProducts() {
         <div class="card-copy">
           <p class="card-category">${category}</p>
           <h3>${name}</h3>
+          <p class="price">${formatPrice(price)}</p>
           <div class="card-actions">
             <button class="details" data-detail="${id}" aria-label="تفاصيل ${name}" aria-haspopup="dialog">عرض التفاصيل <span class="arrow" aria-hidden="true"></span></button>
-            <button class="add" data-add="${id}" aria-label="اختيار ${name}"></button>
+            <button class="add" data-add="${id}" aria-label="إضافة ${name} إلى السلة">+</button>
           </div>
         </div>
       </article>
     `;
   }).join('');
-  updateButtons();
+  updateCartCount();
 }
 
 for (const label of [allCategories, ...Object.keys(groups)]) {
@@ -252,16 +259,38 @@ function renderDetail(product) {
   title.textContent = product.name;
   body.innerHTML = `
     <div class="detail-photo">${renderPhoto(product, true)}</div>
-    <button class="button" data-toggle="${product.id}">${selected.has(product.id) ? 'إزالة من مختاراتي' : 'إضافة إلى مختاراتي'}</button>
+    <div class="detail-actions">
+      <span class="price">${formatPrice(product.price)}</span>
+      <button class="button" data-add="${product.id}" ${cart.get(product.id) === maxQuantity ? 'disabled' : ''}>إضافة إلى السلة</button>
+    </div>
   `;
 }
 
-function renderSelection() {
-  title.textContent = 'مختاراتي';
-  const items = products.filter(product => selected.has(product.id));
-  body.innerHTML = items.length ? `<ul class="selection-list">${items.map(({ id, name }) =>
-    `<li><span>${name}</span><button data-remove="${id}" aria-label="إزالة ${name}">إزالة</button></li>`,
-  ).join('')}</ul>` : '<p>لم تختاري أي منتج بعد.</p>';
+function renderCart() {
+  title.textContent = 'السلة';
+  const items = products.filter(product => cart.has(product.id));
+  if (!items.length) {
+    body.innerHTML = '<p>السلة فارغة.</p>';
+    return;
+  }
+
+  const total = items.reduce((sum, { id, price }) => sum + price * cart.get(id), 0);
+  body.innerHTML = `
+    <ul class="cart-list">
+      ${items.map(({ id, name, price }) => {
+        const quantity = cart.get(id);
+        return `<li>
+          <div><strong>${name}</strong><div class="price">${formatPrice(price * quantity)}</div></div>
+          <div class="cart-quantity" role="group" aria-label="كمية ${name}">
+            <button data-cart-id="${id}" data-delta="-1" aria-label="${quantity === 1 ? 'إزالة' : 'إنقاص كمية'} ${name}">−</button>
+            <span aria-live="polite">${number.format(quantity)}</span>
+            <button data-cart-id="${id}" data-delta="1" aria-label="زيادة كمية ${name}" ${quantity === maxQuantity ? 'disabled' : ''}>+</button>
+          </div>
+        </li>`;
+      }).join('')}
+    </ul>
+    <p class="cart-total"><strong>المجموع</strong><strong class="price">${formatPrice(total)}</strong></p>
+  `;
 }
 
 search.addEventListener('input', renderProducts);
@@ -269,28 +298,31 @@ grid.addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button) return;
   if (button.dataset.add) {
-    toggleSelection(Number(button.dataset.add));
+    changeQuantity(Number(button.dataset.add), 1);
   } else {
     renderDetail(products.find(product => product.id === Number(button.dataset.detail)));
     dialog.showModal();
   }
 });
-openSelection.addEventListener('click', () => {
-  renderSelection();
+openCart.addEventListener('click', () => {
+  renderCart();
   dialog.showModal();
 });
 body.addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button) return;
-  if (button.dataset.toggle) {
-    const id = Number(button.dataset.toggle);
-    toggleSelection(id);
-    button.textContent = selected.has(id) ? 'إزالة من مختاراتي' : 'إضافة إلى مختاراتي';
-  } else if (button.dataset.remove) {
-    toggleSelection(Number(button.dataset.remove));
-    renderSelection();
-    (body.querySelector('button') || dialog.querySelector('.close')).focus();
+  if (button.dataset.add) {
+    const id = Number(button.dataset.add);
+    changeQuantity(id, 1);
+    button.disabled = cart.get(id) === maxQuantity;
+    return;
   }
+  const { cartId, delta } = button.dataset;
+  if (!cartId) return;
+  changeQuantity(Number(cartId), Number(delta));
+  renderCart();
+  const matchingButton = body.querySelector(`[data-cart-id="${cartId}"][data-delta="${delta}"]:enabled`);
+  (matchingButton || body.querySelector('button:enabled') || dialog.querySelector('.close')).focus();
 });
 
 renderProducts();
