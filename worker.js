@@ -3,6 +3,51 @@ import { groups, products } from './images/catalogue.js';
 
 const catalogue = new Map(products.map(product => [product.id, product]));
 const categories = Object.keys(groups);
+const previousCatalogueNames = new Map([
+  [1, 'مستحضر في علبة بملصق أخضر'],
+  [2, 'مجموعة للعناية'],
+  [3, 'مستحضرات عناية بعبوات ذات مضخّة'],
+  [4, 'مستحضر في علبة بملصق أزرق'],
+  [5, 'مستحضر في علبة بملصق ذهبي'],
+  [6, 'مستحضر في علبة بملصق وردي'],
+  [7, 'مستحضر في علبة بملصق فاتح'],
+  [8, 'عناية للوجه في قارورة'],
+  [9, 'مستحضر في علبة بملصق بيج'],
+  [10, 'مستحضر في علبة بملصق بنفسجي'],
+  [11, 'مستحضر في علبة بملصق زيتوني'],
+  [12, 'تشكيلة مستحضرات عناية في علب'],
+  [13, 'مستحضر في علبة بملصق أصفر'],
+  [15, 'عبوتان للعناية'],
+  [16, 'تشكيلة عبوات ملوّنة'],
+  [17, 'علبة هدايا للعناية'],
+  [18, 'مستحضر عناية بالشعر في أنبوب'],
+  [19, 'تشكيلة علب للعناية'],
+  [20, 'مقشّرات للوجه'],
+  [21, 'مجموعة للعناية بالشعر'],
+  [23, 'كريم للعناية'],
+  [24, 'مستحضرات عناية بالجسم في علب'],
+  [25, 'طقم عناية في علبة'],
+  [26, 'صابون بالليمون'],
+  [27, 'كريمات ومنتجات للعناية بالوجه'],
+  [28, 'مجموعة للعناية بالجسم'],
+  [29, 'مختارات من مستحضرات العناية في علب'],
+  [30, 'مستحضر عناية بالشعر في قارورة'],
+  [31, 'عبوات عناية بمضخّة'],
+  [32, 'أقنعة للوجه'],
+  [33, 'زيت الورد روز بريز'],
+  [34, 'تشكيلة مستحضرات عناية معطّرة'],
+  [35, 'زيت عناية بملصق زيتوني'],
+  [36, 'زيت عناية بملصق أصفر'],
+  [37, 'زيت عناية بملصق وردي'],
+  [38, 'زيت عناية بملصق أخضر'],
+  [39, 'قارورة روماتيكس'],
+  [40, 'مقشّرات للوجه والجسم'],
+  [41, 'زيت عناية بملصق ذهبي'],
+  [42, 'زيت عناية بملصق أزرق'],
+  [43, 'زيت عناية بملصق بيج'],
+  [44, 'مستحضرات عناية في عبوات وعلب'],
+  [45, 'مورّد الخدود بالعكر الفاسي'],
+]);
 const defaults = {
   name: 'عزيزة ستور',
   headline: 'عناية تليق',
@@ -73,6 +118,16 @@ export class StoreData extends DurableObject {
       CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, created TEXT NOT NULL, items TEXT NOT NULL, total INTEGER NOT NULL, status TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS login_limits (ip TEXT PRIMARY KEY, attempts INTEGER NOT NULL, expires INTEGER NOT NULL);
     `);
+    ctx.storage.transactionSync(() => {
+      if (this.get('catalogue-names-v2', false)) return;
+      const overrides = this.get('products', {});
+      for (const [id, previousName] of previousCatalogueNames) {
+        // Price-only edits used to save a copy of the old catalogue name.
+        if (overrides[id]?.name === previousName) delete overrides[id].name;
+      }
+      this.set('products', overrides);
+      this.set('catalogue-names-v2', true);
+    });
   }
 
   get(key, fallback) {
@@ -140,7 +195,9 @@ export class StoreData extends DurableObject {
       const name = cleanText(data?.name, 120);
       if (!base || !name || !categories.includes(data.category) || !Number.isInteger(data.price) || data.price < 1 || data.price > 100000 || typeof data.hidden !== 'boolean') return json({ error: 'invalid' }, 400);
       const { id, category, price, hidden } = data;
-      this.set('products', { ...overrides, [id]: { name, category, price, hidden } });
+      const saved = { category, price, hidden };
+      if (name !== base.name) saved.name = name;
+      this.set('products', { ...overrides, [id]: saved });
       return json({ ok: true });
     }
     if (path === '/order-status') {
