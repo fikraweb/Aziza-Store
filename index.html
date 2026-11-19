@@ -14,7 +14,6 @@
     <div class="wrap header-inner">
       <a class="brand" href="#" aria-label="عزيزة ستور، الصفحة الرئيسية"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">عزيزة<small>ستور</small></span></a>
       <nav aria-label="التنقّل الرئيسي"><a href="#catalogue">المنتجات</a><a href="#boutique">عن المتجر</a></nav>
-      <button class="selection" id="open-cart" aria-haspopup="dialog">السلة <span id="count" aria-live="polite">0</span></button>
     </div>
   </header>
   <main>
@@ -45,6 +44,11 @@
       <a href="#catalogue">تصفّحي المنتجات</a>
     </div>
   </footer>
+  <button class="floating-cart" id="open-cart" aria-haspopup="dialog">
+    <span class="bag-icon" aria-hidden="true"></span>
+    <span class="floating-cart-label">السلة</span>
+    <span id="count" aria-live="polite">0</span>
+  </button>
   <dialog id="dialog" aria-labelledby="dialog-title">
     <div class="dialog-header"><h2 id="dialog-title"></h2><form method="dialog"><button class="close" aria-label="إغلاق">×</button></form></div>
     <div id="dialog-body"></div>

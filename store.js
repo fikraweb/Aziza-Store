@@ -155,6 +155,9 @@ const dialog = document.querySelector('#dialog');
 const title = document.querySelector('#dialog-title');
 const body = document.querySelector('#dialog-body');
 const openCart = document.querySelector('#open-cart');
+const businessWhatsApp = ''; // Business number in international format, digits only.
+const demoWhatsApp = '12025550147'; // Reserved fictional number.
+const storeWhatsApp = businessWhatsApp || demoWhatsApp;
 const storageKey = 'aziza-cart';
 const maxQuantity = 99;
 const cart = new Map();
@@ -282,7 +285,7 @@ function renderCart() {
     return;
   }
 
-  const total = items.reduce((sum, { id, price }) => sum + price * cart.get(id), 0);
+  const total = cartTotal();
   body.innerHTML = `
     <ul class="cart-list">
       ${items.map(({ id, name, price }) => {
@@ -297,9 +300,78 @@ function renderCart() {
         </li>`;
       }).join('')}
     </ul>
-    <p class="cart-total"><strong>المجموع</strong><strong class="price">${formatPrice(total)}</strong></p>
+    <p class="cart-total"><strong>مجموع المنتجات</strong><strong class="price">${formatPrice(total)}</strong></p>
+    <button class="button checkout-next" data-checkout>متابعة الطلب</button>
   `;
 }
+
+function cartTotal() {
+  return products.reduce((sum, { id, price }) => sum + price * (cart.get(id) ?? 0), 0);
+}
+
+function renderCheckout() {
+  title.textContent = 'معلومات التوصيل';
+  body.innerHTML = `
+    <form id="checkout-form" class="checkout-form">
+      <p class="cart-total"><strong>مجموع المنتجات</strong><strong class="price">${formatPrice(cartTotal())}</strong></p>
+      <label for="customer-name">الاسم الكامل</label>
+      <input id="customer-name" name="name" autocomplete="name" required maxlength="100">
+      <label for="customer-phone">رقم الهاتف</label>
+      <input id="customer-phone" name="phone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" required maxlength="25">
+      <label for="customer-city">المدينة</label>
+      <input id="customer-city" name="city" autocomplete="address-level2" required maxlength="80">
+      <label for="customer-address">عنوان التوصيل</label>
+      <textarea id="customer-address" name="address" autocomplete="street-address" rows="2" required maxlength="300"></textarea>
+      <p class="checkout-note">غادي يتحل واتساب برسالة فيها الطلب ومعلومات التوصيل. راجع الرسالة واضغط على إرسال باش يوصل الطلب للمتجر.</p>
+      ${businessWhatsApp ? '' : '<p class="checkout-status">وضع التجربة: رقم واتساب وهمي. استعمل معلومات وهمية، حيت المتجر ما غاديش يتوصل بالطلب.</p>'}
+      <button type="submit" class="button">${businessWhatsApp ? 'تأكيد الطلب عبر واتساب' : 'جرّب الطلب عبر واتساب'}</button>
+      <button type="button" class="checkout-back" data-back-cart>رجوع للسلة</button>
+      <p class="checkout-status" aria-live="polite"></p>
+    </form>
+  `;
+  body.querySelector('#customer-name').focus();
+}
+
+function customerPhone(value) {
+  return value
+    .replace(/[٠-٩]/gu, digit => '٠١٢٣٤٥٦٧٨٩'.indexOf(digit))
+    .replace(/[۰-۹]/gu, digit => '۰۱۲۳۴۵۶۷۸۹'.indexOf(digit))
+    .replace(/[\s().-]/gu, '');
+}
+
+body.addEventListener('submit', event => {
+  if (event.target.id !== 'checkout-form') return;
+  event.preventDefault();
+  if (!cart.size) return;
+
+  const form = event.target;
+  const fields = new FormData(form);
+  const name = fields.get('name').trim();
+  const phone = customerPhone(fields.get('phone'));
+  const city = fields.get('city').trim();
+  const address = fields.get('address').trim();
+  const status = form.querySelector('[aria-live]');
+  if (!name || !city || !address || !/^\+?[0-9]{7,15}$/.test(phone)) {
+    status.textContent = 'تأكد من الاسم ورقم الهاتف والمدينة وعنوان التوصيل.';
+    return;
+  }
+
+  const lines = products.filter(({ id }) => cart.has(id)).map(({ id, name, price }) =>
+    `• ${cart.get(id)} × ${name} — ${formatPrice(price * cart.get(id))}`,
+  );
+  const message = [
+    'السلام عليكم، بغيت نأكد هاد الطلب من عزيزة ستور.',
+    '',
+    ...lines,
+    `مجموع المنتجات: ${formatPrice(cartTotal())}`,
+    '',
+    `الاسم: ${name}`,
+    `الهاتف: ${phone}`,
+    `المدينة: ${city}`,
+    `عنوان التوصيل: ${address}`,
+  ].join('\n');
+  window.open(`https://wa.me/${storeWhatsApp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+});
 
 search.addEventListener('input', renderProducts);
 grid.addEventListener('click', event => {
@@ -324,6 +396,15 @@ body.addEventListener('click', event => {
     changeQuantity(id, 1);
     button.disabled = cart.get(id) === maxQuantity;
     body.querySelector('.detail-status').textContent = `الكمية في السلة ${number.format(cart.get(id))}`;
+    return;
+  }
+  if (button.hasAttribute('data-checkout')) {
+    renderCheckout();
+    return;
+  }
+  if (button.hasAttribute('data-back-cart')) {
+    renderCart();
+    body.querySelector('[data-checkout]').focus();
     return;
   }
   const { cartId, delta } = button.dataset;
