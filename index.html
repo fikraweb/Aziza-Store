@@ -13,7 +13,9 @@
   <header class="header">
     <div class="wrap header-inner">
       <a class="brand" href="#" aria-label="عزيزة ستور، الصفحة الرئيسية"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">عزيزة<small>ستور</small></span></a>
-      <nav aria-label="التنقّل الرئيسي"><a href="#catalogue">المنتجات</a><a href="#boutique">عن المتجر</a></nav>
+      <nav aria-label="التنقّل الرئيسي">
+        <a href="#collections">الأقسام</a><a href="#catalogue">المنتجات</a><a href="#guide">دليل العناية</a><a href="#questions">الأسئلة الشائعة</a>
+      </nav>
     </div>
   </header>
   <main>
@@ -27,6 +29,27 @@
       <img class="hero-image" src="images/hero.webp" alt="شامبو السدر وزيت الورد ومورّد الخدود بالعكر الفاسي" width="1536" height="1024" fetchpriority="high">
     </section>
 
+    <section class="collections wrap" id="collections" aria-labelledby="collections-title">
+      <div class="editorial-heading" data-reveal>
+        <h2 id="collections-title">اختاري قسم العناية</h2>
+        <p>تصفّحي المنتجات حسب الجزء اللي بغيتي تعتاني به.</p>
+      </div>
+      <div class="collection-grid">
+        <a class="collection-card" href="#catalogue" data-category="الوجه" data-reveal>
+          <span class="collection-image" data-product="33" aria-hidden="true"></span>
+          <span class="collection-copy"><strong>الوجه</strong><span>زيوت وأقنعة ومقشّرات</span><span class="arrow" aria-hidden="true"></span></span>
+        </a>
+        <a class="collection-card" href="#catalogue" data-category="الجسم" data-reveal>
+          <span class="collection-image" data-product="31" aria-hidden="true"></span>
+          <span class="collection-copy"><strong>الجسم</strong><span>مستحضرات وأطقم العناية</span><span class="arrow" aria-hidden="true"></span></span>
+        </a>
+        <a class="collection-card" href="#catalogue" data-category="الشعر" data-reveal>
+          <span class="collection-image" data-product="14" aria-hidden="true"></span>
+          <span class="collection-copy"><strong>الشعر</strong><span>شامبو ومنتجات العناية</span><span class="arrow" aria-hidden="true"></span></span>
+        </a>
+      </div>
+    </section>
+
     <section class="catalogue wrap" id="catalogue" aria-labelledby="catalogue-title">
       <div class="section-heading">
         <h2 id="catalogue-title">منتجات عزيزة</h2>
@@ -36,12 +59,42 @@
       <p id="result-count" class="result-count" aria-live="polite"></p>
       <div id="products" class="grid"></div>
     </section>
+
+    <section class="guide wrap" id="guide" aria-labelledby="guide-title" data-reveal>
+      <div class="guide-intro">
+        <h2 id="guide-title">روتين عناية على قدّ وقتك</h2>
+        <p>إلا كنتِ باغية تبداي روتين جديد، اختاري خطوة سهلة تقدري تداومي عليها.</p>
+      </div>
+      <div class="guide-links">
+        <a href="#catalogue" data-category="الوجه"><strong>عناية بالوجه</strong><span>اختاري منتجًا يناسب بشرتك، واقرئي طريقة الاستعمال على العبوة.</span><span class="arrow" aria-hidden="true"></span></a>
+        <a href="#catalogue" data-category="الجسم"><strong>عناية بالجسم</strong><span>تصفّحي المستحضرات والأطقم واختاري اللي كيناسب روتينك بعد الحمّام.</span><span class="arrow" aria-hidden="true"></span></a>
+        <a href="#catalogue" data-category="الشعر"><strong>عناية بالشعر</strong><span>بداي باختيار شامبو، وشوفي طريقة استعمال كل مستحضر قبل ما تضيفيه للروتين.</span><span class="arrow" aria-hidden="true"></span></a>
+      </div>
+    </section>
+
+    <section class="questions wrap" id="questions" aria-labelledby="questions-title" data-reveal>
+      <div class="editorial-heading"><h2 id="questions-title">أسئلة شائعة</h2></div>
+      <div class="question-list">
+        <details>
+          <summary>كيفاش نطلب منتج؟</summary>
+          <p>زيدي المنتجات للسلة، ومن بعد اختاري «متابعة الطلب». كتعمّري معلومات التوصيل وكتراجعي رسالة الطلب فواتساب. <span id="faq-demo" hidden>دابا هاد الخطوة متاحة للتجربة برقم وهمي.</span></p>
+        </details>
+        <details>
+          <summary>نقدر نبدّل الكمية قبل ما نأكد الطلب؟</summary>
+          <p>إييه، فالسلة كاين زر الزيادة وزر النقصان لكل منتج. المجموع كيتحدّث مع كل تغيير.</p>
+        </details>
+        <details>
+          <summary>واش المجموع فيه مصاريف التوصيل؟</summary>
+          <p>المجموع اللي كيبان فالسلة هو ثمن المنتجات. مصاريف التوصيل ما محسوباش فيه.</p>
+        </details>
+      </div>
+    </section>
   </main>
   <footer id="boutique">
     <div class="wrap footer-inner">
       <a class="brand" href="#"><img class="mark" src="images/aziza-mark.png" alt="" width="48" height="48"><span class="wordmark">عزيزة<small>ستور</small></span></a>
-      <p>متجر للعناية بالوجه والجسم والشعر.</p>
-      <a href="#catalogue">تصفّحي المنتجات</a>
+      <p>عزيزة ستور كيجمع لك منتجات العناية بالوجه والجسم والشعر فمتجر واحد.</p>
+      <div class="footer-links"><a href="#catalogue">تصفّحي المنتجات</a><a href="#questions">مساعدة فالطلب</a></div>
     </div>
   </footer>
   <button class="floating-cart" id="open-cart" aria-haspopup="dialog">

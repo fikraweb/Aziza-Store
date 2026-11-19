@@ -158,6 +158,7 @@ const openCart = document.querySelector('#open-cart');
 const businessWhatsApp = ''; // Business number in international format, digits only.
 const demoWhatsApp = '12025550147'; // Reserved fictional number.
 const storeWhatsApp = businessWhatsApp || demoWhatsApp;
+document.querySelector('#faq-demo').hidden = Boolean(businessWhatsApp);
 const storageKey = 'aziza-cart';
 const maxQuantity = 99;
 const cart = new Map();
@@ -245,17 +246,44 @@ function renderProducts() {
   updateCartCount();
 }
 
+function selectCategory(label) {
+  category = label;
+  for (const button of filters.querySelectorAll('button')) {
+    button.setAttribute('aria-pressed', button.textContent === label);
+  }
+  renderProducts();
+}
+
 for (const label of [allCategories, ...Object.keys(groups)]) {
   const button = document.createElement('button');
   button.textContent = label;
   button.setAttribute('aria-pressed', label === category);
-  button.addEventListener('click', () => {
-    filters.querySelector('[aria-pressed=true]').setAttribute('aria-pressed', 'false');
-    button.setAttribute('aria-pressed', 'true');
-    category = label;
-    renderProducts();
-  });
+  button.addEventListener('click', () => selectCategory(label));
   filters.append(button);
+}
+
+for (const link of document.querySelectorAll('a[data-category]')) {
+  link.addEventListener('click', () => {
+    search.value = '';
+    selectCategory(link.dataset.category);
+  });
+}
+
+for (const frame of document.querySelectorAll('.collection-image')) {
+  const product = products.find(item => item.id === Number(frame.dataset.product));
+  frame.innerHTML = renderPhoto(product);
+}
+
+if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('revealed');
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: 0.15 });
+
+  for (const section of document.querySelectorAll('[data-reveal]')) observer.observe(section);
 }
 
 function renderDetail(product) {
