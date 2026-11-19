@@ -126,7 +126,7 @@ const cardCrops = {
   40: [0, 474, 720, 818],
 };
 
-// Use the studio composition on the three featured cards. Details use the originals.
+// Use one studio crop per featured product in both the card and the detail view.
 const studioCrops = {
   14: [311, 48, 365, 870],
   33: [669, 172, 230, 741],
@@ -136,7 +136,7 @@ const studioCrops = {
 function renderPhoto(product, detail = false) {
   const { id, name, image } = product;
   const [sourceWidth, sourceHeight, top, bottom] = photoBounds[id - 1];
-  const studio = !detail && studioCrops[id];
+  const studio = studioCrops[id];
   const originalCrop = (!detail && cardCrops[id]) || [0, top, sourceWidth, bottom - top];
   const [x, y, width, height] = studio || originalCrop;
   const percent = (part, whole) => `${(part / whole) * 100}%`;
@@ -226,9 +226,9 @@ function renderProducts() {
       <article class="card">
         <button class="photo" data-detail="${id}" aria-label="عرض صورة ${name}" aria-haspopup="dialog">
           ${renderPhoto(product)}
+          <span class="card-category">${category}</span>
         </button>
         <div class="card-copy">
-          <p class="card-category">${category}</p>
           <h3>${name}</h3>
           <p class="price">${formatPrice(price)}</p>
           <div class="card-actions">
@@ -256,17 +256,25 @@ for (const label of [allCategories, ...Object.keys(groups)]) {
 }
 
 function renderDetail(product) {
-  title.textContent = product.name;
+  dialog.classList.add('product-dialog');
+  dialog.setAttribute('aria-labelledby', 'product-dialog-title');
   body.innerHTML = `
-    <div class="detail-photo">${renderPhoto(product, true)}</div>
-    <div class="detail-actions">
-      <span class="price">${formatPrice(product.price)}</span>
-      <button class="button" data-add="${product.id}" ${cart.get(product.id) === maxQuantity ? 'disabled' : ''}>إضافة إلى السلة</button>
+    <div class="detail-layout">
+      <div class="detail-photo">${renderPhoto(product, true)}</div>
+      <div class="detail-copy">
+        <p class="detail-category">${product.category}</p>
+        <h2 id="product-dialog-title">${product.name}</h2>
+        <p class="price">${formatPrice(product.price)}</p>
+        <button class="button" data-add="${product.id}" ${cart.get(product.id) === maxQuantity ? 'disabled' : ''}>إضافة إلى السلة</button>
+        <p class="detail-status" aria-live="polite"></p>
+      </div>
     </div>
   `;
 }
 
 function renderCart() {
+  dialog.classList.remove('product-dialog');
+  dialog.setAttribute('aria-labelledby', 'dialog-title');
   title.textContent = 'السلة';
   const items = products.filter(product => cart.has(product.id));
   if (!items.length) {
@@ -315,6 +323,7 @@ body.addEventListener('click', event => {
     const id = Number(button.dataset.add);
     changeQuantity(id, 1);
     button.disabled = cart.get(id) === maxQuantity;
+    body.querySelector('.detail-status').textContent = `الكمية في السلة ${number.format(cart.get(id))}`;
     return;
   }
   const { cartId, delta } = button.dataset;
