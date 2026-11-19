@@ -72,8 +72,12 @@ function renderProducts() {
         <img src="${image}" alt="" loading="lazy" decoding="async">
       </button>
       <div class="card-copy">
-        <div><p>${category}</p><h3>${name}</h3></div>
-        <button class="add" data-add="${id}" aria-label="Sélectionner ${name}"></button>
+        <p class="card-category">${category}</p>
+        <h3>${name}</h3>
+        <div class="card-actions">
+          <button class="details" data-detail="${id}" aria-label="Voir les détails de ${name}" aria-haspopup="dialog">Voir le soin <span class="arrow" aria-hidden="true"></span></button>
+          <button class="add" data-add="${id}" aria-label="Sélectionner ${name}"></button>
+        </div>
       </div>
     </article>
   `).join('');
